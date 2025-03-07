@@ -1,0 +1,5 @@
+name = "finance-management-system"
+compatibility_date = "2024-03-20"
+
+[site]
+bucket = "." 

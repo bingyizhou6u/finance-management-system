@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>财务报表 - 企业财务管理系统</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏导航 -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>财务管理系统</span>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-home"></i>
+                        <span>仪表盘</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="transactions.html">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>交易记录</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="budget.html">
+                        <i class="fas fa-wallet"></i>
+                        <span>预算管理</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="reports.html">
+                        <i class="fas fa-file-alt"></i>
+                        <span>财务报表</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="invoices.html">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>发票管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="搜索报表...">
+                </div>
+                <div class="user-profile">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="profile">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAAAsTAAALEwEAmpwYAAADSUlEQVR4nO2Xy09TQRTGf11ApEALxQckLFywYmfCBmNiYgwmJi5c+Df4WLhwxcaFMTFxZ+JGY0w0PqIoIgpIQZ5SWmihvNrCNZ1ybu7UW9qCpIlf0uTOzD3nm3PmzDkXdmIn/h8kgbPAZaAD6AcmgHlgGVgDNoECsALMA1PAGHAfuAacAA7+C8JHgRvAa2DdAM0Bz4EuoA1oBKpN1ZrfWoELwFPgq+m7BtwGjv0t4EbgLvDFAAwCN4FWoKKMsRXAIeAW8MmMsQBcB6rKBVsJdAMfjXAvcKZcoCHRDLwwY38AzpYKdgr4YAQeAftLBRoTVcAjM9d74GQxA9QZYNbYbcUMWGY0Ae/MvO+AujiD1QJvjVBXOQGXCLjLzP8GqIka5DAwZ/p3lBtwAQfM/LPAwbBOe4CPxnNbdwFcwCEzfz9QHdZJk2XJeG7vLgEXcNjYMBnWSZNFk+XQbgIX0GBsWAjrpMmiyaJZvJvQZFkK66TJosmi2bybUBvCOsUli/pjLTAKvDRFk0Z9UbN4NzEf1ikuWdQfVUZfA7eAM0A9UBFiw25Ak2UprFNcsqg/qj/qTdUYXfXHbkCTZSGsU1yyqD9qP9R+qH1R+6P2Se2XOwlNlvmwTnHJov6o/VD7ofZF7Y/aJ7Vf7iQ0WebCOsUli/qj9kPth9oXtT9qn9R+uZPQZJkN6xSXLOqP2g+1H2pf1P6ofVL75U5Ck2UmrFNcsqg/aj/Ufqh9Ufuj9knWHxeAVWCDYn9cBZaAaWAQeGAqY/pEUfvlTkKTZTqsU1yyqD9qP9R+qH1R+6P2Se2XOwnN4qmwTnHJov6o/VD7ofZF7Y/aJ7Vf7iQ0WSbDOsUli/qj9kPth9oXtT9qn9R+uZPQZBkP6xSXLOqP2g+1H2pf1P6ofVL75U5Ck2UsrFNcsqg/aj/Ufqh9Ufuj9knWHxeAVWCDYn9cBZaAaWAQeGAqY/pEUfvlTkKTZTSsU1yyqD9qP9R+qH1R+6P2Se2XOwnN4pGwTnHJov6o/VD7ofZF7Y/aJ7Vf7iQ0WYbDOsUli/qj9kPth9oXtT9qn9R+uZPQZBkK6xSXLOqP2g+1H2pf1P6ofVL75U5Cs3gwrNNO7MT/Fb8AoVj4KUYkXWQAAAAASUVORK5CYII=" alt="用户头像">
+                        <span id="username-display">管理员</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 财务报表内容 -->
+            <div class="reports-page">
+                <div class="page-header">
+                    <h2>财务报表</h2>
+                    <div class="header-actions">
+                        <button class="export-btn">
+                            <i class="fas fa-download"></i>
+                            导出报表
+                        </button>
+                        <button class="print-btn">
+                            <i class="fas fa-print"></i>
+                            打印
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 报表筛选器 -->
+                <div class="report-filters">
+                    <div class="filter-group">
+                        <label>报表类型</label>
+                        <select>
+                            <option value="income">收入报表</option>
+                            <option value="expense">支出报表</option>
+                            <option value="balance">资产负债表</option>
+                            <option value="cash">现金流量表</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>时间范围</label>
+                        <select>
+                            <option value="month">本月</option>
+                            <option value="quarter">本季度</option>
+                            <option value="year">本年</option>
+                            <option value="custom">自定义</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>部门</label>
+                        <select>
+                            <option value="all">全部部门</option>
+                            <option value="sales">销售部</option>
+                            <option value="marketing">市场部</option>
+                            <option value="hr">人力资源部</option>
+                            <option value="it">IT部</option>
+                        </select>
+                    </div>
+                    <button class="generate-report-btn">
+                        <i class="fas fa-sync"></i>
+                        生成报表
+                    </button>
+                </div>
+
+                <!-- 报表预览 -->
+                <div class="report-preview">
+                    <div class="report-header">
+                        <h3>收入报表</h3>
+                        <div class="report-meta">
+                            <span>生成时间：2024-03-20 14:30</span>
+                            <span>报表周期：2024年第一季度</span>
+                        </div>
+                    </div>
+
+                    <!-- 报表摘要 -->
+                    <div class="report-summary">
+                        <div class="summary-card">
+                            <h4>总收入</h4>
+                            <p class="amount positive">¥1,285,000</p>
+                            <span class="trend positive">+12.5%</span>
+                        </div>
+                        <div class="summary-card">
+                            <h4>平均收入</h4>
+                            <p class="amount">¥428,333</p>
+                            <span class="trend positive">+8.3%</span>
+                        </div>
+                        <div class="summary-card">
+                            <h4>最大收入</h4>
+                            <p class="amount">¥450,000</p>
+                            <span class="trend neutral">0%</span>
+                        </div>
+                        <div class="summary-card">
+                            <h4>最小收入</h4>
+                            <p class="amount">¥385,000</p>
+                            <span class="trend negative">-5.2%</span>
+                        </div>
+                    </div>
+
+                    <!-- 报表图表 -->
+                    <div class="report-charts">
+                        <div class="chart-container">
+                            <h4>收入趋势</h4>
+                            <div class="chart" id="incomeTrendChart">
+                                <!-- 图表将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <h4>收入构成</h4>
+                            <div class="chart" id="incomeCompositionChart">
+                                <!-- 图表将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 详细数据表格 -->
+                    <div class="report-table">
+                        <h4>详细数据</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>月份</th>
+                                    <th>产品收入</th>
+                                    <th>服务收入</th>
+                                    <th>其他收入</th>
+                                    <th>总收入</th>
+                                    <th>同比增长</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1月</td>
+                                    <td>¥250,000</td>
+                                    <td>¥100,000</td>
+                                    <td>¥35,000</td>
+                                    <td>¥385,000</td>
+                                    <td class="trend negative">-5.2%</td>
+                                </tr>
+                                <tr>
+                                    <td>2月</td>
+                                    <td>¥300,000</td>
+                                    <td>¥120,000</td>
+                                    <td>¥30,000</td>
+                                    <td>¥450,000</td>
+                                    <td class="trend neutral">0%</td>
+                                </tr>
+                                <tr>
+                                    <td>3月</td>
+                                    <td>¥280,000</td>
+                                    <td>¥110,000</td>
+                                    <td>¥40,000</td>
+                                    <td>¥430,000</td>
+                                    <td class="trend positive">+8.3%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

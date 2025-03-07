@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交易记录 - 企业财务管理系统</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏导航 -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>财务管理系统</span>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-home"></i>
+                        <span>仪表盘</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="transactions.html">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>交易记录</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="budget.html">
+                        <i class="fas fa-wallet"></i>
+                        <span>预算管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reports.html">
+                        <i class="fas fa-file-alt"></i>
+                        <span>财务报表</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="invoices.html">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>发票管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="搜索交易...">
+                </div>
+                <div class="user-profile">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="profile">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAAAsTAAALEwEAmpwYAAADSUlEQVR4nO2Xy09TQRTGf11ApEALxQckLFywYmfCBmNiYgwmJi5c+Df4WLhwxcaFMTFxZ+JGY0w0PqIoIgpIQZ5SWmihvNrCNZ1ybu7UW9qCpIlf0uTOzD3nm3PmzDkXdmIn/h8kgbPAZaAD6AcmgHlgGVgDNoECsALMA1PAGHAfuAacAA7+C8JHgRvAa2DdAM0Bz4EuoA1oBKpN1ZrfWoELwFPgq+m7BtwGjv0t4EbgLvDFAAwCN4FWoKKMsRXAIeAW8MmMsQBcB6rKBVsJdAMfjXAvcKZcoCHRDLwwY38AzpYKdgr4YAQeAftLBRoTVcAjM9d74GQxA9QZYNbYbcUMWGY0Ae/MvO+AujiD1QJvjVBXOQGXCLjLzP8GqIka5DAwZ/p3lBtwAQfM/LPAwbBOe4CPxnNbdwFcwCEzfz9QHdZJk2XJeG7vLgEXcNjYMBnWSZNFk+XQbgIX0GBsWAjrpMmiyaJZvJvQZFkK66TJosmi2bybUBvCOsUli/pjLTAKvDRFk0Z9UbN4NzEf1ikuWdQfVUZfA7eAM0A9UBFiw25Ak2UprFNcsqg/qj/qTdUYXfXHbkCTZSGsU1yyqD9qP9R+qH1R+6P2Se2XOwlNlvmwTnHJov6o/VD7ofZF7Y/aJ7Vf7iQ0WebCOsUli/qj9kPth9oXtT9qn9R+uZPQZJkN6xSXLOqP2g+1H2pf1P6ofVL75U5Ck2UmrFNcsqg/aj/Ufqh9Ufuj9knWHxeAVWCDYn9cBZaAaWAQeGAqY/pEUfvlTkKTZTqsU1yyqD9qP9R+qH1R+6P2Se2XOwnN4qmwTnHJov6o/VD7ofZF7Y/aJ7Vf7iQ0WSbDOsUli/qj9kPth9oXtT9qn9R+uZPQZBkP6xSXLOqP2g+1H2pf1P6ofVL75U5Ck2UsrFNcsqg/aj/Ufqh9Ufuj9knWHxeAVWCDYn9cBZaAaWAQeGAqY/pEUfvlTkKTZTSsU1yyqD9qP9R+qH1R+6P2Se2XOwnN4pGwTnHJov6o/VD7ofZF7Y/aJ7Vf7iQ0WYbDOsUli/qj9kPth9oXtT9qn9R+uZPQZBkK6xSXLOqP2g+1H2pf1P6ofVL75U5Cs3gwrNNO7MT/Fb8AoVj4KUYkXWQAAAAASUVORK5CYII=" alt="用户头像">
+                        <span id="username-display">管理员</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 交易记录内容 -->
+            <div class="transactions-page">
+                <div class="page-header">
+                    <h2>交易记录</h2>
+                    <button class="add-transaction-btn">
+                        <i class="fas fa-plus"></i>
+                        新增交易
+                    </button>
+                </div>
+
+                <!-- 筛选器 -->
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>日期范围</label>
+                        <div class="date-range">
+                            <input type="date" value="2024-01-01">
+                            <span>至</span>
+                            <input type="date" value="2024-03-20">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label>交易类型</label>
+                        <select>
+                            <option value="all">全部</option>
+                            <option value="income">收入</option>
+                            <option value="expense">支出</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>状态</label>
+                        <select>
+                            <option value="all">全部</option>
+                            <option value="completed">已完成</option>
+                            <option value="pending">待处理</option>
+                            <option value="cancelled">已取消</option>
+                        </select>
+                    </div>
+                    <button class="apply-filters-btn">
+                        <i class="fas fa-filter"></i>
+                        应用筛选
+                    </button>
+                </div>
+
+                <!-- 交易列表 -->
+                <div class="transactions-list">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>交易编号</th>
+                                <th>描述</th>
+                                <th>类别</th>
+                                <th>金额</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2024-03-20</td>
+                                <td>#TRX-001</td>
+                                <td>办公用品采购</td>
+                                <td>支出</td>
+                                <td class="amount negative">-¥2,500</td>
+                                <td><span class="status completed">已完成</span></td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2024-03-19</td>
+                                <td>#TRX-002</td>
+                                <td>客户付款</td>
+                                <td>收入</td>
+                                <td class="amount positive">+¥15,000</td>
+                                <td><span class="status completed">已完成</span></td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2024-03-18</td>
+                                <td>#TRX-003</td>
+                                <td>水电费</td>
+                                <td>支出</td>
+                                <td class="amount negative">-¥3,800</td>
+                                <td><span class="status pending">待处理</span></td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 分页 -->
+                <div class="pagination">
+                    <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <span>...</span>
+                    <button class="page-btn">10</button>
+                    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>预算管理 - 企业财务管理系统</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏导航 -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>财务管理系统</span>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-home"></i>
+                        <span>仪表盘</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="transactions.html">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>交易记录</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="budget.html">
+                        <i class="fas fa-wallet"></i>
+                        <span>预算管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reports.html">
+                        <i class="fas fa-file-alt"></i>
+                        <span>财务报表</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="invoices.html">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>发票管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="搜索预算...">
+                </div>
+                <div class="user-profile">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="profile">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAAAsTAAALEwEAmpwYAAADSUlEQVR4nO2Xy09TQRTGf11ApEALxQckLFywYmfCBmNiYgwmJi5c+Df4WLhwxcaFMTFxZ+JGY0w0PqIoIgpIQZ5SWmihvNrCNZ1ybu7UW9qCpIlf0uTOzD3nm3PmzDkXdmIn/h8kgbPAZaAD6AcmgHlgGVgDNoECsALMA1PAGHAfuAacAA7+C8JHgRvAa2DdAM0Bz4EuoA1oBKpN1ZrfWoELwFPgq+m7BtwGjv0t4EbgLvDFAAwCN4FWoKKMsRXAIeAW8MmMsQBcB6rKBVsJdAMfjXAvcKZcoCHRDLwwY38AzpYKdgr4YAQeAftLBRoTVcAjM9d74GQxA9QZYNbYbcUMWGY0Ae/MvO+AujiD1QJvjVBXOQGXCLjLzP8GqIka5DAwZ/p3lBtwAQfM/LPAwbBOe4CPxnNbdwFcwCEzfz9QHdZJk2XJeG7vLgEXcNjYMBnWSZNFk+XQbgIX0GBsWAjrpMmiyaJZvJvQZFkK66TJosmi2bybUBvCOsUli/pjLTAKvDRFk0Z9UbN4NzEf1ikuWdQfVUZfA7eAM0A9UBFiw25Ak2UprFNcsqg/qj/qTdUYXfXHbkCTZSGsU1yyqD9qP9R+qH1R+6P2Se2XOwlNlvmwTnHJov6o/VD7ofZF7Y/aJ7Vf7iQ0WebCOsUli/qj9kPth9oXtT9qn9R+uZPQZJkN6xSXLOqP2g+1H2pf1P6ofVL75U5Ck2UmrFNcsqg/aj/Ufqh9Ufuj9knWHxeAVWCDYn9cBZaAaWAQeGAqY/pEUfvlTkKTZTqsU1yyqD9qP9R+qH1R+6P2Se2XOwnN4qmwTnHJov6o/VD7ofZF7Y/aJ7Vf7iQ0WSbDOsUli/qj9kPth9oXtT9qn9R+uZPQZBkP6xSXLOqP2g+1H2pf1P6ofVL75U5Ck2UsrFNcsqg/aj/Ufqh9Ufuj9knWHxeAVWCDYn9cBZaAaWAQeGAqY/pEUfvlTkKTZTSsU1yyqD9qP9R+qH1R+6P2Se2XOwnN4pGwTnHJov6o/VD7ofZF7Y/aJ7Vf7iQ0WYbDOsUli/qj9kPth9oXtT9qn9R+uZPQZBkK6xSXLOqP2g+1H2pf1P6ofVL75U5Cs3gwrNNO7MT/Fb8AoVj4KUYkXWQAAAAASUVORK5CYII=" alt="用户头像">
+                        <span id="username-display">管理员</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 预算管理内容 -->
+            <div class="budget-page">
+                <div class="page-header">
+                    <h2>预算管理</h2>
+                    <button class="add-budget-btn">
+                        <i class="fas fa-plus"></i>
+                        新增预算
+                    </button>
+                </div>
+
+                <!-- 预算概览 -->
+                <div class="budget-overview">
+                    <div class="overview-card">
+                        <h3>总预算</h3>
+                        <p class="amount">¥500,000</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 75%"></div>
+                        </div>
+                        <span class="progress-text">已使用 75%</span>
+                    </div>
+                    <div class="overview-card">
+                        <h3>本月预算</h3>
+                        <p class="amount">¥100,000</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 45%"></div>
+                        </div>
+                        <span class="progress-text">已使用 45%</span>
+                    </div>
+                    <div class="overview-card">
+                        <h3>剩余预算</h3>
+                        <p class="amount">¥125,000</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 25%"></div>
+                        </div>
+                        <span class="progress-text">剩余 25%</span>
+                    </div>
+                </div>
+
+                <!-- 预算分类 -->
+                <div class="budget-categories">
+                    <h3>预算分类</h3>
+                    <div class="categories-grid">
+                        <div class="category-card">
+                            <div class="category-header">
+                                <i class="fas fa-users"></i>
+                                <h4>人工成本</h4>
+                            </div>
+                            <div class="category-details">
+                                <div class="budget-info">
+                                    <span>预算</span>
+                                    <p>¥200,000</p>
+                                </div>
+                                <div class="budget-info">
+                                    <span>已用</span>
+                                    <p>¥150,000</p>
+                                </div>
+                                <div class="budget-info">
+                                    <span>剩余</span>
+                                    <p>¥50,000</p>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="category-card">
+                            <div class="category-header">
+                                <i class="fas fa-building"></i>
+                                <h4>办公用品</h4>
+                            </div>
+                            <div class="category-details">
+                                <div class="budget-info">
+                                    <span>预算</span>
+                                    <p>¥50,000</p>
+                                </div>
+                                <div class="budget-info">
+                                    <span>已用</span>
+                                    <p>¥30,000</p>
+                                </div>
+                                <div class="budget-info">
+                                    <span>剩余</span>
+                                    <p>¥20,000</p>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        <div class="category-card">
+                            <div class="category-header">
+                                <i class="fas fa-bolt"></i>
+                                <h4>水电费</h4>
+                            </div>
+                            <div class="category-details">
+                                <div class="budget-info">
+                                    <span>预算</span>
+                                    <p>¥30,000</p>
+                                </div>
+                                <div class="budget-info">
+                                    <span>已用</span>
+                                    <p>¥25,000</p>
+                                </div>
+                                <div class="budget-info">
+                                    <span>剩余</span>
+                                    <p>¥5,000</p>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 83%"></div>
+                            </div>
+                        </div>
+                        <div class="category-card">
+                            <div class="category-header">
+                                <i class="fas fa-bullhorn"></i>
+                                <h4>市场推广</h4>
+                            </div>
+                            <div class="category-details">
+                                <div class="budget-info">
+                                    <span>预算</span>
+                                    <p>¥100,000</p>
+                                </div>
+                                <div class="budget-info">
+                                    <span>已用</span>
+                                    <p>¥45,000</p>
+                                </div>
+                                <div class="budget-info">
+                                    <span>剩余</span>
+                                    <p>¥55,000</p>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 45%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 预算趋势图 -->
+                <div class="budget-trend">
+                    <h3>预算趋势</h3>
+                    <div class="chart" id="budgetTrendChart">
+                        <!-- 图表将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
