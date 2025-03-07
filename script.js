@@ -754,4 +754,354 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-}); 
+});
+
+// 标签管理页面功能
+if (document.querySelector('.tags-page')) {
+    // API URL
+    const apiUrl = 'https://finance-api.bingyizhou6u.workers.dev';
+    
+    // DOM 元素
+    const tagsList = document.getElementById('tags-list');
+    const totalTagsElement = document.getElementById('total-tags');
+    const mostUsedTagElement = document.getElementById('most-used-tag');
+    const recentTagsElement = document.getElementById('recent-tags');
+    const linkedTransactionsElement = document.getElementById('linked-transactions');
+    const tagSearchInput = document.getElementById('tag-search');
+    const tagSortSelect = document.getElementById('tag-sort');
+    const addTagBtn = document.querySelector('.add-tag-btn');
+    const saveTagBtn = document.getElementById('save-tag-btn');
+    const updateTagBtn = document.getElementById('update-tag-btn');
+    
+    // 模态框
+    const addTagModal = new bootstrap.Modal(document.getElementById('addTagModal'));
+    const editTagModal = new bootstrap.Modal(document.getElementById('editTagModal'));
+    
+    // 图表
+    let tagUsageChart;
+    let tagDistributionChart;
+    
+    // 加载标签数据
+    async function loadTags() {
+        try {
+            const response = await fetch(`${apiUrl}/api/tags`);
+            const data = await response.json();
+            
+            if (data.success) {
+                displayTags(data.data);
+                updateTagStats(data.data);
+                createTagCharts(data.data);
+            } else {
+                console.error('加载标签失败:', data.error);
+            }
+        } catch (error) {
+            console.error('加载标签时出错:', error);
+        }
+    }
+    
+    // 显示标签列表
+    function displayTags(tags) {
+        tagsList.innerHTML = '';
+        
+        if (tags.length === 0) {
+            tagsList.innerHTML = '<tr><td colspan="5" class="text-center">暂无标签数据</td></tr>';
+            return;
+        }
+        
+        // 根据排序选项排序
+        const sortBy = tagSortSelect.value;
+        if (sortBy === 'name') {
+            tags.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (sortBy === 'usage') {
+            // 假设我们有使用次数数据
+            tags.sort((a, b) => (b.usage_count || 0) - (a.usage_count || 0));
+        } else if (sortBy === 'date') {
+            tags.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        }
+        
+        // 根据搜索过滤
+        const searchTerm = tagSearchInput.value.toLowerCase();
+        const filteredTags = searchTerm 
+            ? tags.filter(tag => tag.name.toLowerCase().includes(searchTerm))
+            : tags;
+        
+        filteredTags.forEach(tag => {
+            const row = document.createElement('tr');
+            
+            // 使用次数（模拟数据，实际应从API获取）
+            const usageCount = Math.floor(Math.random() * 20);
+            
+            // 创建日期（如果没有，使用当前日期）
+            const createdAt = tag.created_at ? new Date(tag.created_at).toLocaleDateString() : new Date().toLocaleDateString();
+            
+            row.innerHTML = `
+                <td>
+                    <span class="tag-color-preview" style="background-color: ${tag.color}"></span>
+                    <span class="tag-badge" style="background-color: ${tag.color}">${tag.name}</span>
+                </td>
+                <td>${tag.color}</td>
+                <td>${usageCount}</td>
+                <td>${createdAt}</td>
+                <td>
+                    <button class="btn tag-action-btn edit-tag-btn" data-id="${tag.id}">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn tag-action-btn delete-tag-btn" data-id="${tag.id}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            `;
+            
+            tagsList.appendChild(row);
+        });
+        
+        // 添加编辑和删除事件监听器
+        document.querySelectorAll('.edit-tag-btn').forEach(btn => {
+            btn.addEventListener('click', () => editTag(btn.dataset.id));
+        });
+        
+        document.querySelectorAll('.delete-tag-btn').forEach(btn => {
+            btn.addEventListener('click', () => deleteTag(btn.dataset.id));
+        });
+    }
+    
+    // 更新标签统计信息
+    function updateTagStats(tags) {
+        // 标签总数
+        totalTagsElement.textContent = tags.length;
+        
+        // 最常用标签（模拟数据）
+        if (tags.length > 0) {
+            const randomIndex = Math.floor(Math.random() * tags.length);
+            mostUsedTagElement.textContent = tags[randomIndex].name;
+        }
+        
+        // 最近添加的标签数量（假设最近7天）
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+        
+        const recentTags = tags.filter(tag => {
+            const tagDate = tag.created_at ? new Date(tag.created_at) : new Date();
+            return tagDate >= oneWeekAgo;
+        });
+        
+        recentTagsElement.textContent = recentTags.length;
+        
+        // 关联交易数量（模拟数据）
+        const linkedTransactions = Math.floor(Math.random() * 100);
+        linkedTransactionsElement.textContent = linkedTransactions;
+    }
+    
+    // 创建标签图表
+    function createTagCharts(tags) {
+        // 使用情况图表
+        const usageCtx = document.getElementById('tagUsageChart').getContext('2d');
+        
+        // 模拟使用数据
+        const usageData = tags.slice(0, 5).map(tag => ({
+            name: tag.name,
+            color: tag.color,
+            count: Math.floor(Math.random() * 50) + 1
+        }));
+        
+        if (tagUsageChart) {
+            tagUsageChart.destroy();
+        }
+        
+        tagUsageChart = new Chart(usageCtx, {
+            type: 'bar',
+            data: {
+                labels: usageData.map(item => item.name),
+                datasets: [{
+                    label: '使用次数',
+                    data: usageData.map(item => item.count),
+                    backgroundColor: usageData.map(item => item.color),
+                    borderColor: usageData.map(item => item.color),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        
+        // 分布图表
+        const distributionCtx = document.getElementById('tagDistributionChart').getContext('2d');
+        
+        // 模拟分布数据
+        const distributionData = tags.map(tag => ({
+            name: tag.name,
+            color: tag.color,
+            value: Math.floor(Math.random() * 100) + 1
+        }));
+        
+        if (tagDistributionChart) {
+            tagDistributionChart.destroy();
+        }
+        
+        tagDistributionChart = new Chart(distributionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: distributionData.map(item => item.name),
+                datasets: [{
+                    data: distributionData.map(item => item.value),
+                    backgroundColor: distributionData.map(item => item.color),
+                    borderColor: '#ffffff',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+    }
+    
+    // 编辑标签
+    async function editTag(tagId) {
+        try {
+            const response = await fetch(`${apiUrl}/api/tags/${tagId}`);
+            const data = await response.json();
+            
+            if (data.success) {
+                const tag = data.data;
+                document.getElementById('edit-tag-id').value = tag.id;
+                document.getElementById('edit-tag-name').value = tag.name;
+                document.getElementById('edit-tag-color').value = tag.color;
+                
+                editTagModal.show();
+            } else {
+                console.error('获取标签详情失败:', data.error);
+                alert('获取标签详情失败');
+            }
+        } catch (error) {
+            console.error('编辑标签时出错:', error);
+            alert('编辑标签时出错');
+        }
+    }
+    
+    // 删除标签
+    async function deleteTag(tagId) {
+        if (confirm('确定要删除这个标签吗？')) {
+            try {
+                const response = await fetch(`${apiUrl}/api/tags/${tagId}`, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('标签删除成功');
+                    loadTags();
+                } else {
+                    console.error('删除标签失败:', data.error);
+                    alert('删除标签失败');
+                }
+            } catch (error) {
+                console.error('删除标签时出错:', error);
+                alert('删除标签时出错');
+            }
+        }
+    }
+    
+    // 添加标签
+    async function addTag() {
+        const name = document.getElementById('tag-name').value;
+        const color = document.getElementById('tag-color').value;
+        
+        if (!name) {
+            alert('请输入标签名称');
+            return;
+        }
+        
+        try {
+            const response = await fetch(`${apiUrl}/api/tags`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    color,
+                    created_by: 1 // 假设当前用户ID为1
+                })
+            });
+            const data = await response.json();
+            
+            if (data.success) {
+                alert('标签添加成功');
+                document.getElementById('add-tag-form').reset();
+                addTagModal.hide();
+                loadTags();
+            } else {
+                console.error('添加标签失败:', data.error);
+                alert('添加标签失败');
+            }
+        } catch (error) {
+            console.error('添加标签时出错:', error);
+            alert('添加标签时出错');
+        }
+    }
+    
+    // 更新标签
+    async function updateTag() {
+        const id = document.getElementById('edit-tag-id').value;
+        const name = document.getElementById('edit-tag-name').value;
+        const color = document.getElementById('edit-tag-color').value;
+        
+        if (!name) {
+            alert('请输入标签名称');
+            return;
+        }
+        
+        try {
+            const response = await fetch(`${apiUrl}/api/tags/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    color
+                })
+            });
+            const data = await response.json();
+            
+            if (data.success) {
+                alert('标签更新成功');
+                editTagModal.hide();
+                loadTags();
+            } else {
+                console.error('更新标签失败:', data.error);
+                alert('更新标签失败');
+            }
+        } catch (error) {
+            console.error('更新标签时出错:', error);
+            alert('更新标签时出错');
+        }
+    }
+    
+    // 事件监听器
+    addTagBtn.addEventListener('click', () => addTagModal.show());
+    saveTagBtn.addEventListener('click', addTag);
+    updateTagBtn.addEventListener('click', updateTag);
+    
+    tagSearchInput.addEventListener('input', () => {
+        loadTags();
+    });
+    
+    tagSortSelect.addEventListener('change', () => {
+        loadTags();
+    });
+    
+    // 初始加载
+    loadTags();
+} 
