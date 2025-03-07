@@ -23,7 +23,7 @@
 
 1. 克隆仓库
    ```
-   git clone https://github.com/yourusername/finance-management-system.git
+   git clone https://github.com/bingyizhou6u/finance-management-system.git
    ```
 
 2. 打开项目目录
