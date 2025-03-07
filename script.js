@@ -1,93 +1,183 @@
-// 收支趋势图表
-const trendChart = new Chart(document.getElementById('trendChart'), {
-    type: 'line',
-    data: {
-        labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
-        datasets: [
-            {
-                label: '收入',
-                data: [120000, 150000, 128500, 160000, 145000, 180000],
-                borderColor: '#34C759',
-                backgroundColor: 'rgba(52, 199, 89, 0.1)',
-                tension: 0.4,
-                fill: true
-            },
-            {
-                label: '支出',
-                data: [90000, 95000, 85200, 100000, 92000, 95000],
-                borderColor: '#FF3B30',
-                backgroundColor: 'rgba(255, 59, 48, 0.1)',
-                tension: 0.4,
-                fill: true
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    usePointStyle: true,
-                    padding: 20
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                grid: {
-                    display: true,
-                    drawBorder: false
-                },
-                ticks: {
-                    callback: function(value) {
-                        return '¥' + value.toLocaleString();
-                    }
-                }
-            },
-            x: {
-                grid: {
-                    display: false
-                }
-            }
-        }
-    }
+// 等待DOM和Chart.js库加载完成
+document.addEventListener('DOMContentLoaded', function() {
+    // 初始化图表
+    initializeCharts();
+    
+    // 检查登录状态
+    checkLoginStatus();
 });
 
-// 支出分类图表
-const categoryChart = new Chart(document.getElementById('categoryChart'), {
-    type: 'doughnut',
-    data: {
-        labels: ['人工成本', '办公用品', '水电费', '市场推广', '其他'],
-        datasets: [{
-            data: [40, 15, 20, 15, 10],
-            backgroundColor: [
-                '#007AFF',
-                '#5856D6',
-                '#34C759',
-                '#FF9500',
-                '#FF3B30'
-            ],
-            borderWidth: 0
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'right',
-                labels: {
-                    usePointStyle: true,
-                    padding: 20
+// 初始化所有图表
+function initializeCharts() {
+    // 检查是否存在相应的图表元素
+    const trendChartElement = document.getElementById('trendChart');
+    const categoryChartElement = document.getElementById('categoryChart');
+    const incomeTrendChartElement = document.getElementById('incomeTrendChart');
+    const incomeCompositionChartElement = document.getElementById('incomeCompositionChart');
+    const tagUsageChartElement = document.getElementById('tagUsageChart');
+    const tagDistributionChartElement = document.getElementById('tagDistributionChart');
+    
+    // 收支趋势图表
+    if (trendChartElement && typeof Chart !== 'undefined') {
+        const trendChart = new Chart(trendChartElement, {
+            type: 'line',
+            data: {
+                labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+                datasets: [
+                    {
+                        label: '收入',
+                        data: [120000, 150000, 128500, 160000, 145000, 180000],
+                        borderColor: '#34C759',
+                        backgroundColor: 'rgba(52, 199, 89, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: '支出',
+                        data: [90000, 95000, 85200, 100000, 92000, 95000],
+                        borderColor: '#FF3B30',
+                        backgroundColor: 'rgba(255, 59, 48, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: false,
+                        text: '收支趋势'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '¥' + value.toLocaleString();
+                            }
+                        }
+                    }
                 }
             }
-        },
-        cutout: '70%'
+        });
     }
-});
+    
+    // 支出分类图表
+    if (categoryChartElement && typeof Chart !== 'undefined') {
+        const categoryChart = new Chart(categoryChartElement, {
+            type: 'doughnut',
+            data: {
+                labels: ['办公用品', '水电费', '房租', '工资', '市场推广', '其他'],
+                datasets: [{
+                    data: [15000, 8500, 25000, 85000, 35000, 12000],
+                    backgroundColor: [
+                        '#FF9500',
+                        '#FF3B30',
+                        '#5856D6',
+                        '#007AFF',
+                        '#FF2D55',
+                        '#8E8E93'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+    }
+    
+    // 收入趋势图表（财务报表页面）
+    if (incomeTrendChartElement && typeof Chart !== 'undefined') {
+        const incomeTrendChart = new Chart(incomeTrendChartElement, {
+            type: 'line',
+            data: {
+                labels: ['1月', '2月', '3月'],
+                datasets: [
+                    {
+                        label: '产品收入',
+                        data: [85000, 95000, 105000],
+                        borderColor: '#007AFF',
+                        backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: '服务收入',
+                        data: [45000, 55000, 65000],
+                        borderColor: '#5856D6',
+                        backgroundColor: 'rgba(88, 86, 214, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: '其他收入',
+                        data: [15000, 18000, 20000],
+                        borderColor: '#34C759',
+                        backgroundColor: 'rgba(52, 199, 89, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '¥' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    // 收入构成图表（财务报表页面）
+    if (incomeCompositionChartElement && typeof Chart !== 'undefined') {
+        const incomeCompositionChart = new Chart(incomeCompositionChartElement, {
+            type: 'doughnut',
+            data: {
+                labels: ['产品收入', '服务收入', '其他收入'],
+                datasets: [{
+                    data: [105000, 65000, 20000],
+                    backgroundColor: [
+                        '#007AFF',
+                        '#5856D6',
+                        '#34C759'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+    }
+}
 
 // 导航栏交互
 document.querySelectorAll('.nav-links a').forEach(link => {
@@ -774,12 +864,40 @@ if (document.querySelector('.tags-page')) {
     const updateTagBtn = document.getElementById('update-tag-btn');
     
     // 模态框
-    const addTagModal = new bootstrap.Modal(document.getElementById('addTagModal'));
-    const editTagModal = new bootstrap.Modal(document.getElementById('editTagModal'));
+    let addTagModal, editTagModal;
     
     // 图表
     let tagUsageChart;
     let tagDistributionChart;
+    
+    // 初始化标签页面
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化模态框
+        if (typeof bootstrap !== 'undefined') {
+            addTagModal = new bootstrap.Modal(document.getElementById('addTagModal'));
+            editTagModal = new bootstrap.Modal(document.getElementById('editTagModal'));
+        }
+        
+        // 事件监听器
+        if (addTagBtn) addTagBtn.addEventListener('click', () => addTagModal && addTagModal.show());
+        if (saveTagBtn) saveTagBtn.addEventListener('click', addTag);
+        if (updateTagBtn) updateTagBtn.addEventListener('click', updateTag);
+        
+        if (tagSearchInput) {
+            tagSearchInput.addEventListener('input', () => {
+                loadTags();
+            });
+        }
+        
+        if (tagSortSelect) {
+            tagSortSelect.addEventListener('change', () => {
+                loadTags();
+            });
+        }
+        
+        // 初始加载
+        loadTags();
+    });
     
     // 加载标签数据
     async function loadTags() {
@@ -801,6 +919,8 @@ if (document.querySelector('.tags-page')) {
     
     // 显示标签列表
     function displayTags(tags) {
+        if (!tagsList) return;
+        
         tagsList.innerHTML = '';
         
         if (tags.length === 0) {
@@ -809,7 +929,7 @@ if (document.querySelector('.tags-page')) {
         }
         
         // 根据排序选项排序
-        const sortBy = tagSortSelect.value;
+        const sortBy = tagSortSelect ? tagSortSelect.value : 'name';
         if (sortBy === 'name') {
             tags.sort((a, b) => a.name.localeCompare(b.name));
         } else if (sortBy === 'usage') {
@@ -820,7 +940,7 @@ if (document.querySelector('.tags-page')) {
         }
         
         // 根据搜索过滤
-        const searchTerm = tagSearchInput.value.toLowerCase();
+        const searchTerm = tagSearchInput ? tagSearchInput.value.toLowerCase() : '';
         const filteredTags = searchTerm 
             ? tags.filter(tag => tag.name.toLowerCase().includes(searchTerm))
             : tags;
@@ -868,34 +988,39 @@ if (document.querySelector('.tags-page')) {
     // 更新标签统计信息
     function updateTagStats(tags) {
         // 标签总数
-        totalTagsElement.textContent = tags.length;
+        if (totalTagsElement) totalTagsElement.textContent = tags.length;
         
         // 最常用标签（模拟数据）
-        if (tags.length > 0) {
+        if (mostUsedTagElement && tags.length > 0) {
             const randomIndex = Math.floor(Math.random() * tags.length);
             mostUsedTagElement.textContent = tags[randomIndex].name;
         }
         
         // 最近添加的标签数量（假设最近7天）
-        const oneWeekAgo = new Date();
-        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-        
-        const recentTags = tags.filter(tag => {
-            const tagDate = tag.created_at ? new Date(tag.created_at) : new Date();
-            return tagDate >= oneWeekAgo;
-        });
-        
-        recentTagsElement.textContent = recentTags.length;
+        if (recentTagsElement) {
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            
+            const recentTags = tags.filter(tag => {
+                const tagDate = tag.created_at ? new Date(tag.created_at) : new Date();
+                return tagDate >= oneWeekAgo;
+            });
+            
+            recentTagsElement.textContent = recentTags.length;
+        }
         
         // 关联交易数量（模拟数据）
-        const linkedTransactions = Math.floor(Math.random() * 100);
-        linkedTransactionsElement.textContent = linkedTransactions;
+        if (linkedTransactionsElement) {
+            const linkedTransactions = Math.floor(Math.random() * 100);
+            linkedTransactionsElement.textContent = linkedTransactions;
+        }
     }
     
     // 创建标签图表
     function createTagCharts(tags) {
         // 使用情况图表
-        const usageCtx = document.getElementById('tagUsageChart').getContext('2d');
+        const usageCtx = document.getElementById('tagUsageChart');
+        if (!usageCtx || typeof Chart === 'undefined') return;
         
         // 模拟使用数据
         const usageData = tags.slice(0, 5).map(tag => ({
@@ -931,7 +1056,8 @@ if (document.querySelector('.tags-page')) {
         });
         
         // 分布图表
-        const distributionCtx = document.getElementById('tagDistributionChart').getContext('2d');
+        const distributionCtx = document.getElementById('tagDistributionChart');
+        if (!distributionCtx || typeof Chart === 'undefined') return;
         
         // 模拟分布数据
         const distributionData = tags.map(tag => ({
@@ -978,7 +1104,7 @@ if (document.querySelector('.tags-page')) {
                 document.getElementById('edit-tag-name').value = tag.name;
                 document.getElementById('edit-tag-color').value = tag.color;
                 
-                editTagModal.show();
+                editTagModal && editTagModal.show();
             } else {
                 console.error('获取标签详情失败:', data.error);
                 alert('获取标签详情失败');
@@ -1014,8 +1140,13 @@ if (document.querySelector('.tags-page')) {
     
     // 添加标签
     async function addTag() {
-        const name = document.getElementById('tag-name').value;
-        const color = document.getElementById('tag-color').value;
+        const nameInput = document.getElementById('tag-name');
+        const colorInput = document.getElementById('tag-color');
+        
+        if (!nameInput || !colorInput) return;
+        
+        const name = nameInput.value;
+        const color = colorInput.value;
         
         if (!name) {
             alert('请输入标签名称');
@@ -1038,8 +1169,9 @@ if (document.querySelector('.tags-page')) {
             
             if (data.success) {
                 alert('标签添加成功');
-                document.getElementById('add-tag-form').reset();
-                addTagModal.hide();
+                const form = document.getElementById('add-tag-form');
+                if (form) form.reset();
+                addTagModal && addTagModal.hide();
                 loadTags();
             } else {
                 console.error('添加标签失败:', data.error);
@@ -1053,9 +1185,15 @@ if (document.querySelector('.tags-page')) {
     
     // 更新标签
     async function updateTag() {
-        const id = document.getElementById('edit-tag-id').value;
-        const name = document.getElementById('edit-tag-name').value;
-        const color = document.getElementById('edit-tag-color').value;
+        const idInput = document.getElementById('edit-tag-id');
+        const nameInput = document.getElementById('edit-tag-name');
+        const colorInput = document.getElementById('edit-tag-color');
+        
+        if (!idInput || !nameInput || !colorInput) return;
+        
+        const id = idInput.value;
+        const name = nameInput.value;
+        const color = colorInput.value;
         
         if (!name) {
             alert('请输入标签名称');
@@ -1077,7 +1215,7 @@ if (document.querySelector('.tags-page')) {
             
             if (data.success) {
                 alert('标签更新成功');
-                editTagModal.hide();
+                editTagModal && editTagModal.hide();
                 loadTags();
             } else {
                 console.error('更新标签失败:', data.error);
@@ -1088,20 +1226,29 @@ if (document.querySelector('.tags-page')) {
             alert('更新标签时出错');
         }
     }
+}
+
+// 检查登录状态
+function checkLoginStatus() {
+    // 检查是否有登录信息
+    const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(sessionStorage.getItem('user'));
     
-    // 事件监听器
-    addTagBtn.addEventListener('click', () => addTagModal.show());
-    saveTagBtn.addEventListener('click', addTag);
-    updateTagBtn.addEventListener('click', updateTag);
+    // 如果有用户名显示元素，则更新用户名
+    const usernameDisplay = document.getElementById('username-display');
+    if (usernameDisplay && user && user.username) {
+        usernameDisplay.textContent = user.username;
+    }
     
-    tagSearchInput.addEventListener('input', () => {
-        loadTags();
-    });
+    // 如果在登录页面且已登录，则重定向到仪表盘
+    if (document.querySelector('.login-page') && user) {
+        window.location.href = 'dashboard.html';
+    }
     
-    tagSortSelect.addEventListener('change', () => {
-        loadTags();
-    });
-    
-    // 初始加载
-    loadTags();
+    // 如果不在登录页面且未登录，则重定向到登录页面
+    // 注释掉以下代码，因为目前我们允许未登录访问
+    /*
+    if (!document.querySelector('.login-page') && !user) {
+        window.location.href = 'index.html';
+    }
+    */
 } 
