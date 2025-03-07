@@ -1,5 +1,11 @@
 name = "finance-management-system"
 compatibility_date = "2024-03-20"
+main = "index.js"
 
 [site]
-bucket = "." 
+bucket = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "finance-management-system"
+database_id = "e721ee4d-b6e4-457e-8954-bff0243699d7" 
